@@ -1,0 +1,35 @@
+{
+  "name": "garbage-classification-data",
+  "version": "0.0.1",
+  "description": "垃圾分类数据",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --recursive",
+    "lint": "./node_modules/.bin/eslint . -c .eslintrc --ext js"
+  },
+  "keywords": [
+    "garbage",
+    "classification"
+  ],
+  "engines": {
+    "node": ">=10.0.0"
+  },
+  "author": "alexayan",
+  "license": "ISC",
+  "dependencies": {
+    "fs-extra": "^8.1.0",
+    "lodash": "^4.17.11",
+    "log4js": "^4.4.0",
+    "node-fetch": "^2.6.0",
+    "sql-template-strings": "^2.2.2",
+    "sqlite": "^3.0.3"
+  },
+  "devDependencies": {
+    "eslint": "^5.3.0",
+    "eslint-config-airbnb": "^17.1.1",
+    "eslint-plugin-import": "^2.18.0",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.14.2",
+    "mocha": "^6.1.4"
+  }
+}
