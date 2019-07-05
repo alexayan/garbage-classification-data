@@ -1,11 +1,12 @@
 {
   "name": "garbage-classification-data",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "垃圾分类数据",
   "main": "index.js",
   "scripts": {
     "test": "mocha --recursive",
-    "lint": "./node_modules/.bin/eslint . -c .eslintrc --ext js"
+    "lint": "./node_modules/.bin/eslint . -c .eslintrc --ext js",
+    "prepare": "npm run lint"
   },
   "keywords": [
     "garbage",
