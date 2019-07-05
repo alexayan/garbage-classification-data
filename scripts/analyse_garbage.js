@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const SQL = require('sql-template-strings');
 const sqlite = require('sqlite');
 const path = require('path');

@@ -7,11 +7,16 @@ module.exports = {
     if (value === category) {
       return true;
     }
-    const values = [this.RECYCLEABLE, this.HAZARDOUS, this.HOUSEHOLD_FOOD, this.RESIDUAL].reduce((values, v) => {
+    const values = [
+      this.RECYCLEABLE,
+      this.HAZARDOUS,
+      this.HOUSEHOLD_FOOD,
+      this.RESIDUAL,
+    ].reduce((rtn, v) => {
       if (v !== value) {
-        values.push(v + value);
+        rtn.push(v + value);
       }
-      return values;
+      return rtn;
     }, []);
     return values.indexOf(category) !== -1;
   },
@@ -30,5 +35,5 @@ module.exports = {
       categorys.push(this.RESIDUAL);
     }
     return categorys;
-  }
+  },
 };
