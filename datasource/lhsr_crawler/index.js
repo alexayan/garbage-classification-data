@@ -58,17 +58,15 @@ async function process(c) {
               categroy: TYPES[t],
             };
             logger.info('match', garbage);
-            let res = await datebase.insert(garbage);
-            if (res[0]) {
-              logger.warn(`insert: ${res[0].message}`);
+            let res = await datebase.find(garbage.name);
+            if (!res[1]) {
+              res = await datebase.insert(garbage);
+              logger.info('add garbage', garbage);
+            } else if (res[1].categroy !== garbage.categroy) {
               res = await datebase.update(garbage);
-              if (res[0]) {
-                logger.warn(`update: ${res[0].message}`);
-              } else {
-                logger.info('updated', garbage);
-              }
+              logger.info('update garbage', garbage);
             } else {
-              logger.info('inserted', garbage);
+              logger.info('garbage exist', garbage);
             }
             KEYWORDS.push(garbage.name);
             break;
