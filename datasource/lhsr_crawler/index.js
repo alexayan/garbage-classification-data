@@ -89,6 +89,7 @@ async function process(c) {
 async function start(task) {
   try {
     if (!task) {
+      await fs.unlink(taskFilePath);
       return logger.trace('数据已全部抓取');
     }
     const lastChar = task.lastChar;
@@ -96,9 +97,11 @@ async function start(task) {
     if (lastChar) {
       const index = chineseCharsList.indexOf(lastChar);
       if (index === -1) {
+        await fs.unlink(taskFilePath);
         return logger.trace('数据已全部抓取');
       }
       if (!chineseCharsList[index + 1]) {
+        await fs.unlink(taskFilePath);
         return logger.trace('数据已全部抓取');
       }
       currentChar = chineseCharsList[index + 1];
