@@ -18,63 +18,54 @@ const logger = Logger.getLogger('lhsr');
 
 const KEYWORDS = [];
 const TYPES = {
-  'images/ico-2.jpg': categroy.RECYCLEABLE,
-  'images/ico-4.jpg': categroy.RESIDUAL,
-  'images/ico-3.jpg': categroy.HOUSEHOLD_FOOD,
-  'images/ico-1.jpg': categroy.HAZARDOUS,
+  可回收: categroy.RECYCLEABLE,
+  干垃圾: categroy.RESIDUAL,
+  湿垃圾: categroy.HOUSEHOLD_FOOD,
+  有害垃圾: categroy.HAZARDOUS,
+  大件垃圾: categroy.BIG_WASTE,
+  电器电子产品: categroy.RECYCLEABLE,
+  家用医疗用品: categroy.RESIDUAL,
 };
 
 async function process(c) {
   logger.info(`处理 ${c}`);
   const resp = await fetch(
-    'http://trash.lhsr.cn/sites/feiguan/trashTypes/dyn/Handler/Handler.ashx',
+    'http://trash.lhsr.cn/sites/feiguan/trashTypes_3/Handler/Handler.ashx',
     {
       headers: {
         'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
       },
-      body: `a=Keywords_Get&s_kw=${c}`,
+      body: `a=GET_KEYWORDS&kw=${c}`,
       method: 'POST',
     },
-  ).then(res => res.text());
-  logger.info(`keywords result: ${resp}`);
-  if (resp) {
-    const words = JSON.parse(resp);
-    for (let j = 0; j < words.length; j++) {
-      const word = words[j];
-      logger.info(`处理 ${word}`);
-      if (KEYWORDS.indexOf(word) === -1) {
-        const html = await fetch(
-          `http://trash.lhsr.cn/sites/feiguan/trashTypes_2/TrashQuery.aspx?kw=${encodeURIComponent(
-            word,
-          )}`,
-        ).then(res => res.text());
-        let matched = false;
-        for (let i = 0; i < Object.keys(TYPES).length; i++) {
-          const t = Object.keys(TYPES)[i];
-          if (html.indexOf(t) !== -1) {
-            matched = true;
-            const garbage = {
-              name: word,
-              categroy: TYPES[t],
-            };
-            logger.info('match', garbage);
-            let res = await datebase.find(garbage.name);
-            if (!res[1]) {
-              res = await datebase.insert(garbage);
-              logger.info('add garbage', garbage);
-            } else if (res[1].categroy !== garbage.categroy) {
-              res = await datebase.update(garbage);
-              logger.info('update garbage', garbage);
-            } else {
-              logger.info('garbage exist', garbage);
-            }
-            KEYWORDS.push(garbage.name);
-            break;
-          }
+  ).then(res => res.json());
+  if (resp.kw_list) {
+    logger.info(`keywords result: ${resp.kw_list}`);
+    for (let i = 0, len = resp.kw_list.length; i < len; i++) {
+      const kw = resp.kw_list[i];
+      if (KEYWORDS.indexOf(kw) === -1) {
+        const type = resp.kw_arr[i].TypeKey;
+        if (!TYPES[type]) {
+          logger.warn(`${type} not support`);
+          // eslint-disable-next-line no-continue
+          continue;
         }
-        if (!matched) {
-          logger.warn(`${word} 无法找到分类`);
+        const garbage = {
+          name: kw,
+          categroy: TYPES[type],
+        };
+        logger.info('match', garbage);
+        let res = await datebase.find(garbage.name);
+        if (!res[1]) {
+          res = await datebase.insert(garbage);
+          logger.info('add garbage', garbage);
+        } else if (res[1].categroy !== garbage.categroy) {
+          res = await datebase.update(garbage);
+          logger.info('update garbage', garbage);
+        } else {
+          logger.info('garbage exist', garbage);
         }
+        KEYWORDS.push(garbage.name);
       }
     }
   }

@@ -3,6 +3,7 @@ module.exports = {
   HAZARDOUS: 2, // 有害垃圾
   HOUSEHOLD_FOOD: 4, // 湿垃圾
   RESIDUAL: 8, // 干垃圾
+  BIG_WASTE: 16, // 大件垃圾
   is(value, category) {
     if (value === category) {
       return true;
@@ -12,6 +13,7 @@ module.exports = {
       this.HAZARDOUS,
       this.HOUSEHOLD_FOOD,
       this.RESIDUAL,
+      this.BIG_WASTE,
     ].reduce((rtn, v) => {
       if (v !== value) {
         rtn.push(v + value);
@@ -33,6 +35,9 @@ module.exports = {
     }
     if (this.is(this.RESIDUAL, value)) {
       categorys.push(this.RESIDUAL);
+    }
+    if (this.is(this.BIG_WASTE, value)) {
+      categorys.push(this.BIG_WASTE);
     }
     return categorys;
   },
