@@ -32,7 +32,7 @@
 
 categroy | count
 ------------- | -------------
-1 | 1264
+1 | 1265
 2 | 234
 4 | 1031
 8 | 1422
@@ -49,7 +49,7 @@ node scripts/init_database.js
 运行 lhsr 爬虫
 
 ```
-node datasource/lhsr_crawler/index.js
+node datasource/lhsr_crawler/index.js // 爬虫在 lhsr.log 文件内
 ```
 
 导出 json 格式数据

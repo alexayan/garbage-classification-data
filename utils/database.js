@@ -15,8 +15,8 @@ async function getDb() {
 exports.getDb = getDb;
 
 exports.insert = async (garbage) => {
-  const categorys = categroy.categorys(garbage.categroy);
-  if (categorys.length === 0) {
+  const categroys = categroy.categroys(garbage.categroy);
+  if (categroys.length === 0) {
     return [new Error(`不合法的垃圾类型 garbage.categroy: ${garbage.categroy}`)];
   }
   if (!garbage.name) {
@@ -42,8 +42,8 @@ exports.find = async (garbage) => {
 };
 
 exports.update = async (garbage) => {
-  const categorys = categroy.categorys(garbage.categroy);
-  if (categorys.length === 0) {
+  const categroys = categroy.categroys(garbage.categroy);
+  if (categroys.length === 0) {
     return [new Error(`不合法的垃圾类型 garbage.categroy: ${garbage.categroy}`)];
   }
   if (!garbage.name) {
