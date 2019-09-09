@@ -4,8 +4,8 @@ module.exports = {
   HOUSEHOLD_FOOD: 4, // 湿垃圾
   RESIDUAL: 8, // 干垃圾
   BIG_WASTE: 16, // 大件垃圾
-  is(value, categroy) {
-    if (value === categroy) {
+  is(value, category) {
+    if (value === category) {
       return true;
     }
     const values = [
@@ -20,25 +20,25 @@ module.exports = {
       }
       return rtn;
     }, []);
-    return values.indexOf(categroy) !== -1;
+    return values.indexOf(category) !== -1;
   },
-  categroys(value) {
-    const categroys = [];
+  categorys(value) {
+    const categorys = [];
     if (this.is(this.RECYCLEABLE, value)) {
-      categroys.push(this.RECYCLEABLE);
+      categorys.push(this.RECYCLEABLE);
     }
     if (this.is(this.HAZARDOUS, value)) {
-      categroys.push(this.HAZARDOUS);
+      categorys.push(this.HAZARDOUS);
     }
     if (this.is(this.HOUSEHOLD_FOOD, value)) {
-      categroys.push(this.HOUSEHOLD_FOOD);
+      categorys.push(this.HOUSEHOLD_FOOD);
     }
     if (this.is(this.RESIDUAL, value)) {
-      categroys.push(this.RESIDUAL);
+      categorys.push(this.RESIDUAL);
     }
     if (this.is(this.BIG_WASTE, value)) {
-      categroys.push(this.BIG_WASTE);
+      categorys.push(this.BIG_WASTE);
     }
-    return categroys;
+    return categorys;
   },
 };

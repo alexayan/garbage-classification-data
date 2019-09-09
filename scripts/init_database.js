@@ -11,7 +11,7 @@ async function main() {
   await db.all(
     SQL`CREATE TABLE Garbage (
           name TEXT PRIMARY KEY,
-          categroy NUMBER,
+          category NUMBER,
           create_at TEXT,
           update_at TEXT
         );`,

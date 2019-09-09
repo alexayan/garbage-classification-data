@@ -23,7 +23,7 @@ async function main() {
         JSON.stringify(
           res.map(item => ({
             name: item.name,
-            categroy: item.categroy,
+            category: item.category,
           })),
         ),
       ),

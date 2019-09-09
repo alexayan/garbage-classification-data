@@ -6,7 +6,7 @@ const _ = require('lodash');
 const fetch = require('node-fetch');
 const path = require('path');
 const Logger = require('../../utils/logger');
-const categroy = require('../../utils/categroy');
+const category = require('../../utils/category');
 const datebase = require('../../utils/database');
 const chineseCharsList = _.uniq(require('./chinese_char').split('')).concat(
   'qwertyuiopasdfghjklzxcvbnm'.split(''),
@@ -18,13 +18,13 @@ const logger = Logger.getLogger('lhsr');
 
 const KEYWORDS = [];
 const TYPES = {
-  可回收: categroy.RECYCLEABLE,
-  干垃圾: categroy.RESIDUAL,
-  湿垃圾: categroy.HOUSEHOLD_FOOD,
-  有害垃圾: categroy.HAZARDOUS,
-  大件垃圾: categroy.BIG_WASTE,
-  电器电子产品: categroy.RECYCLEABLE,
-  家用医疗用品: categroy.RESIDUAL,
+  可回收: category.RECYCLEABLE,
+  干垃圾: category.RESIDUAL,
+  湿垃圾: category.HOUSEHOLD_FOOD,
+  有害垃圾: category.HAZARDOUS,
+  大件垃圾: category.BIG_WASTE,
+  电器电子产品: category.RECYCLEABLE,
+  家用医疗用品: category.RESIDUAL,
 };
 
 async function process(c) {
@@ -52,14 +52,14 @@ async function process(c) {
         }
         const garbage = {
           name: kw,
-          categroy: TYPES[type],
+          category: TYPES[type],
         };
         logger.info('match', garbage);
         let res = await datebase.find(garbage.name);
         if (!res[1]) {
           res = await datebase.insert(garbage);
           logger.info('add garbage', garbage);
-        } else if (res[1].categroy !== garbage.categroy) {
+        } else if (res[1].category !== garbage.category) {
           res = await datebase.update(garbage);
           logger.info('update garbage', garbage);
         } else {

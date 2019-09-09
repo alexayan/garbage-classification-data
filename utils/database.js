@@ -1,7 +1,7 @@
 const SQL = require('sql-template-strings');
 const sqlite = require('sqlite');
 const path = require('path');
-const categroy = require('./categroy');
+const category = require('./category');
 
 const databasePath = path.resolve(__dirname, '../database/garbage.sqlite');
 
@@ -15,9 +15,9 @@ async function getDb() {
 exports.getDb = getDb;
 
 exports.insert = async (garbage) => {
-  const categroys = categroy.categroys(garbage.categroy);
-  if (categroys.length === 0) {
-    return [new Error(`不合法的垃圾类型 garbage.categroy: ${garbage.categroy}`)];
+  const categorys = category.categorys(garbage.category);
+  if (categorys.length === 0) {
+    return [new Error(`不合法的垃圾类型 garbage.category: ${garbage.category}`)];
   }
   if (!garbage.name) {
     return [new Error('garbage.name 不能为空')];
@@ -25,7 +25,7 @@ exports.insert = async (garbage) => {
   const db = await getDb();
   const now = new Date().toISOString();
   const result = await db.run(
-    SQL`INSERT INTO Garbage (name, categroy, create_at, update_at) VALUES (${garbage.name}, ${garbage.categroy}, ${now}, ${now})`,
+    SQL`INSERT INTO Garbage (name, category, create_at, update_at) VALUES (${garbage.name}, ${garbage.category}, ${now}, ${now})`,
   ).then(r => [null, r], e => [e]);
   return result;
 };
@@ -42,9 +42,9 @@ exports.find = async (garbage) => {
 };
 
 exports.update = async (garbage) => {
-  const categroys = categroy.categroys(garbage.categroy);
-  if (categroys.length === 0) {
-    return [new Error(`不合法的垃圾类型 garbage.categroy: ${garbage.categroy}`)];
+  const categorys = category.categorys(garbage.category);
+  if (categorys.length === 0) {
+    return [new Error(`不合法的垃圾类型 garbage.category: ${garbage.category}`)];
   }
   if (!garbage.name) {
     return [new Error('garbage.name 不能为空')];
@@ -52,7 +52,7 @@ exports.update = async (garbage) => {
   const db = await getDb();
   const now = new Date().toISOString();
   const result = await db.run(
-    SQL`UPDATE Garbage SET categroy = ${garbage.categroy}, update_at = ${now} WHERE name = ${garbage.name}`,
+    SQL`UPDATE Garbage SET category = ${garbage.category}, update_at = ${now} WHERE name = ${garbage.name}`,
   ).then(r => [null, r], e => [e]);
   return result;
 };
