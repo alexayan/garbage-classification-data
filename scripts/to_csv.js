@@ -21,7 +21,7 @@ async function main() {
       (res) => {
         let content = '';
         res.forEach((garbage) => {
-          content += `${garbage.name},${garbage.categroy}\n`;
+          content += `${garbage.name},${garbage.category}\n`;
         });
         return fs.writeFile(csvFilePath, content);
       },

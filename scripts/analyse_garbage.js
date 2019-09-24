@@ -10,12 +10,12 @@ async function main() {
 
   await db.all(
     SQL`SELECT
-          categroy,
+          category,
           count(*)
         FROM
           Garbage
         GROUP BY
-          categroy;`,
+          category;`,
   ).then((res) => {
     console.log(res);
   }, (e) => {

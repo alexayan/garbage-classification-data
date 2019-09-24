@@ -1,7 +1,7 @@
 const assert = require('assert');
-const categray = require('../../utils/categroy');
+const categray = require('../../utils/category');
 
-describe('utils/categray', function() {
+describe('utils/category', function() {
   describe('#is()', function() {
     it('should return true', function() {
       assert.equal(categray.is(categray.HAZARDOUS, categray.HAZARDOUS), true);

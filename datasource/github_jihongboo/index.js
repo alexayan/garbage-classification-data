@@ -3,17 +3,17 @@
 
 // 数据来源 https://github.com/jihongboo/wast_sortting_helper_wechat/blob/master/miniprogram/resources/result.js
 const Logger = require('../../utils/logger');
-const categroy = require('../../utils/categroy');
+const category = require('../../utils/category');
 const datebase = require('../../utils/database');
 const data = require('./data');
 
 const logger = Logger.getLogger();
 
 const TYPES = {
-  1: categroy.HOUSEHOLD_FOOD,
-  2: categroy.RESIDUAL,
-  3: categroy.RECYCLEABLE,
-  4: categroy.HAZARDOUS,
+  1: category.HOUSEHOLD_FOOD,
+  2: category.RESIDUAL,
+  3: category.RECYCLEABLE,
+  4: category.HAZARDOUS,
 };
 
 async function main() {
@@ -25,7 +25,7 @@ async function main() {
       const item = items[j];
       const garbage = {
         name: item.n,
-        categroy: TYPES[item.c],
+        category: TYPES[item.c],
       };
       let resp = await datebase.insert(garbage);
       if (resp[0]) {

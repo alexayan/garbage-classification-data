@@ -1,13 +1,13 @@
 const assert = require('assert');
 const database = require('../../utils/database');
-const categray = require('../../utils/categroy');
+const categray = require('../../utils/category');
 
 describe('utils/database', function() {
   describe('#insert()', function() {
     it('should insert success', function(done) {
       database.insert({
         name: 'test_insert',
-        categroy: categray.RECYCLEABLE
+        category: categray.RECYCLEABLE
       }).then((res) => {
         if (res[0]) {
           done(res[0]);
@@ -22,7 +22,7 @@ describe('utils/database', function() {
     it('should update success', function(done) {
       database.update({
         name: 'test_insert',
-        categroy: categray.RESIDUAL
+        category: categray.RESIDUAL
       }).then((res) => {
         if (res[0]) {
           done(res[0]);
